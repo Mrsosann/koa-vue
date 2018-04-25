@@ -15,11 +15,11 @@ const apiPreUrl = require('../config/index').base.apiPreUrl
 exports.match = (url, method, status, res) => {
   /**
    * mock 数据 方法0
-   * 在 ./main.js 文件 中引入 require('./mock/index')
+   * 在 ./main.js 文件 中引入 require('./mock/request')
    * 缺点:
    * 1. 所有http请求都不再走网络, 直接由mockjs拦截下来
    * 2. 无法抓包（无http请求）, 浏览器network中看不到请求
-   * 3. 在前端项目build之后, 请求还是会走mockjs, 所以build之前需要手动移除main.js中的require
+   * 3. 在前端项目build之后, 请求还是会走mockjs, 所以build之前需要手动移除main.js中的require （已解决）
    * 4. 即会和前端代码一起打包到bunlde.js中发布到product环境
    * 优点:
    * 1. 直接配置在前端, 跟vue-cli一起打包

@@ -1,24 +1,27 @@
 # koa-vue
-简单的koa2 + vue 从零开始 with vue-cli
+> 简单的koa2 + vue 从零开始 with vue-cli
 
-##1. Create project with vue-cli
+## 1. Create project with `vue-cli`
 ``` bash
 # commit b8bcf6708dd23a69b935eec5e2db66e9b89d382a
 
 npm install -g vue-cli
+
 vue init webpack koa-vue
+
 npm install
+
 npm run dev
 ```
 
-##2. Init server end with koa2
+## 2. Init server end with `koa2`
 ``` bash
 # commit 487661c869eadff3351ac4e5d1633e71fd3c2207
 
 npm install --save busboy koa-router@7 koa-static koa-bodyparser@3
 ```
 
-##3. Install mockjs less, Update Eslint
+## 3. Install `mockjs`、`less`, Update ESLint
 ### less
 ``` bash
 # 用vue-cli建立的项目 less 即装即用
@@ -30,15 +33,14 @@ Reference: [vue-cli构建项目使用 less](https://www.cnblogs.com/zhuzhenwei91
 ``` bash
 # mockjs 在后面会详细的配置
 npm install --save--dev mockjs
+
 npm install --save axios
 ```
 
 ### eslint
-本人使用的编辑器为vscode, 安装对应的编辑器插件(ESLint, Vetur)
-vue-cli建立项目根目录会自带.eslintrc.js文件
-此项目用的lint为standard
+本人使用的编辑器为vscode，安装对应的编辑器插件(`ESLint`，`Vetur`)。vue-cli建立项目根目录会自带`.eslintrc.js`文件。此项目用的lint为standard
 
-** 如果编辑器仍不实时报错的话, 可以试试以下操作 **
+**如果编辑器仍不实时报错的话，可以试试以下操作**
 ``` bash
 # 全局安装eslint
 npm i eslint -g
@@ -46,8 +48,13 @@ npm i eslint -g
 # 能够校验html 和 .vue 文件
 npm i eslint-plugin-html -g
 ```
-** 并在vscode设置中增加个性设置(settings.json) **
-```
+
+**并在vscode设置中增加个性设置(settings.json)**
+
+``` json
+{
+    ...
+
     "eslint.validate": [
         "javascript",
         "javascriptreact",
@@ -59,9 +66,86 @@ npm i eslint-plugin-html -g
         "vue"
     ],
     "eslint.autoFixOnSave": true
+}
 ```
-以上设置能保证vscode识别js, html, vue文件, 并进行Code lint
-如果不需要保存自动修复一些语法错误可以关闭 * "eslint.autoFixOnSave" *
+以上设置能保证vscode识别`js`，`html`，`vue`文件，并进行CodeLint。如果不需要保存自动修复一些语法错误可以关闭 `eslint.autoFixOnSave`
+
+## 4. Mock数据
+> `mockjs` 在上一次commit中已经安装过 [3. Install `mockjs`、`less`, Update ESLint](#3. Install `mockjs`、`less`, Update ESLint)
+Mock数据的两种解决方案：
+```
+.
+├── src
+│   ├── mock
+│   │   ├── index.js      // 方法0：配置webpack.dev.conf.js，在webpack钩子before来引入`./mock/index.js`
+│   │   ├── mock.js       // 方法1：在前端入口main.js文件中引入`./mock/request`
+│   │   └── request.js    // 方法1的接口实现
+```
+### 方法0
+**src/main.js**
+``` diff
++ require('./mock/request')
+```
+**build/webpack.dev.conf.js**
+```diff
+    proxy: config.dev.proxyTable,
+    quiet: true, // necessary for FriendlyErrorsPlugin
+-   before: require('../src/mock/index'), // 引入mock/request.js
++   // before: require('../src/mock/index'), // 引入mock/request.js
+    watchOptions: {
+      poll: config.dev.poll,
+    }
+```
+**src/mock/request.js**
+``` javascript
+  match('userInfo', 'post', 'success', {
+    name: 'MrSosann',
+    date: new Date().toLocaleDateString(),
+    email: Random.email()
+  })
+```
+1. 缺点:
+  1. 所有http请求都不再走网络，直接由mockjs拦截下来
+  2. 无法抓包（无http请求），浏览器network中看不到请求
+  3. 即会和前端代码一起打包到bunlde.js中发布到product环境
+2. 优点:
+  1. 直接配置在前端，跟vue-cli一起打包
+  2. 能够使用vue-cle配置好的热更新，可以实时更改mock数据
+  3. 发布product环境之后仍走mock数据的bug已经解决（**src/mock/request.js**）
+
+### 方法1
+**src/main.js**
+``` diff
+- require('./mock/request')
++ // require('./mock/request')
+```
+**build/webpack.dev.conf.js**
+```diff
+    proxy: config.dev.proxyTable,
+    quiet: true, // necessary for FriendlyErrorsPlugin
+-   // before: require('../src/mock/index'), // 引入mock/request.js
++   before: require('../src/mock/index'), // 引入mock/request.js
+    watchOptions: {
+      poll: config.dev.poll,
+    }
+```
+**src/mock/index.js**
+``` javascript
+  match('userInfo', 'post', 'success', {
+    name: 'MrSosann',
+    date: new Date().toLocaleDateString(),
+    email: Random.email()
+  })
+```
+1. 缺点:
+  1. 无法热更新, 每次更改mock数据都需要重启前端服务(npm run dev)
+2. 优点:
+  1. 能够完美模拟出http请求, (包括可以抓包, 通过浏览器network查看)
+  2. 影响范围仅在dev环境, 对build无影响, 无需手动更改任何配置
+
+### 总结：
+两种方式mock数据各有所长，目前尚未有最佳方案，后续优化TODO！！
+为了最大程度减少切换两种mock方法的改动，只需要打开对应的require就ok，mock某一个接口的match函数，两种方法都一样，复制即可
 
 
 # 下面是 vue init 自带 Readme
