@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 // 配置API接口地址
-var root = '/api/v1'
+var root = require('../config/index').base.apiPreUrl
 // 引用axios
 var axios = require('axios')
 // 自定义判断元素类型JS

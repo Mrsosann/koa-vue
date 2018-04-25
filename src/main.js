@@ -12,7 +12,7 @@ Vue.prototype.$api = api
 Vue.config.productionTip = false
 
 // 引入 mockjs
-// require('./mock/index')
+// require('./mock/request')
 
 /* eslint-disable no-new */
 new Vue({
