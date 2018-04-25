@@ -105,13 +105,13 @@ Mock数据的两种解决方案：
   })
 ```
 1. 缺点:
-  1. 所有http请求都不再走网络，直接由mockjs拦截下来
-  2. 无法抓包（无http请求），浏览器network中看不到请求
-  3. 即会和前端代码一起打包到bunlde.js中发布到product环境
+    1. 所有http请求都不再走网络，直接由mockjs拦截下来
+    2. 无法抓包（无http请求），浏览器network中看不到请求
+    3. 即会和前端代码一起打包到bunlde.js中发布到product环境
 2. 优点:
-  1. 直接配置在前端，跟vue-cli一起打包
-  2. 能够使用vue-cle配置好的热更新，可以实时更改mock数据
-  3. 发布product环境之后仍走mock数据的bug已经解决（**src/mock/request.js**）
+    1. 直接配置在前端，跟vue-cli一起打包
+    2. 能够使用vue-cle配置好的热更新，可以实时更改mock数据
+    3. 发布product环境之后仍走mock数据的bug已经解决（**src/mock/request.js**）
 
 ### 方法1
 **src/main.js**
@@ -138,10 +138,10 @@ Mock数据的两种解决方案：
   })
 ```
 1. 缺点:
-  1. 无法热更新, 每次更改mock数据都需要重启前端服务(npm run dev)
+    1. 无法热更新, 每次更改mock数据都需要重启前端服务(npm run dev)
 2. 优点:
-  1. 能够完美模拟出http请求, (包括可以抓包, 通过浏览器network查看)
-  2. 影响范围仅在dev环境, 对build无影响, 无需手动更改任何配置
+    1. 能够完美模拟出http请求, (包括可以抓包, 通过浏览器network查看)
+    2. 影响范围仅在dev环境, 对build无影响, 无需手动更改任何配置
 
 ### 总结：
 两种方式mock数据各有所长，目前尚未有最佳方案，后续优化TODO！！
