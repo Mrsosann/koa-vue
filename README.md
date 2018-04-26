@@ -147,6 +147,29 @@ Mock数据的两种解决方案：
 两种方式mock数据各有所长，目前尚未有最佳方案，后续优化TODO！！
 为了最大程度减少切换两种mock方法的改动，只需要打开对应的require就ok，mock某一个接口的match函数，两种方法都一样，复制即可
 
+## 5. Install `nodemon` and add src/uitl/index.js
+### `nodemon`
+``` bash
+npm install -g nodemon
+# 使用 nodemon 代替 node 即可实现监听文件改变，重启服务的目的
+nodemon server.js
+```
+
+### src/uitl/index.js
+> 前端工具函数
+**src/main.js**
+``` diff
++ import util from './util/index.js'
++ Vue.prototype.$util = util
+```
+
+### 配置 productionSourceMap
+配置productionSourceMap参数能够让`npm run build`的时候，在dist目录下不生成`.map`的文件，`vue-cli`默认productionSourceMap值为true，所以build之后会有`.map`文件，十分耗时，将其关闭后能够极大减少build时间。
+**config/index.js**
+``` javascript
+productionSourceMap: false,
+```
+
 # Reference
 1. [vue-cli构建项目使用 less](https://www.cnblogs.com/zhuzhenwei918/p/6870340.html?utm_source=itdadao&utm_medium=referral)
 2. [README教程](https://github.com/guodongxiaren/README)
