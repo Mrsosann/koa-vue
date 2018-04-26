@@ -6,8 +6,12 @@ import router from './router'
 
 // 引用API文件
 import api from './api/index.js'
+// 引用工具文件
+import util from './util/index.js'
 // 将API方法绑定到全局
 Vue.prototype.$api = api
+// 将工具方法绑定到全局
+Vue.prototype.$util = util
 
 Vue.config.productionTip = false
 

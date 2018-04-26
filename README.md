@@ -71,7 +71,7 @@ npm i eslint-plugin-html -g
 以上设置能保证vscode识别`js`，`html`，`vue`文件，并进行CodeLint。如果不需要保存自动修复一些语法错误可以关闭 `eslint.autoFixOnSave`
 
 ## 4. Mock数据
-> `mockjs` 在上一次commit中已经安装过 [3. Install `mockjs`、`less`, Update ESLint](#3. Install `mockjs`、`less`, Update ESLint)
+> `mockjs` 在上一次3中commit中已经安装过
 Mock数据的两种解决方案：
 ```
 .
@@ -147,6 +147,10 @@ Mock数据的两种解决方案：
 两种方式mock数据各有所长，目前尚未有最佳方案，后续优化TODO！！
 为了最大程度减少切换两种mock方法的改动，只需要打开对应的require就ok，mock某一个接口的match函数，两种方法都一样，复制即可
 
+# Reference
+1. [vue-cli构建项目使用 less](https://www.cnblogs.com/zhuzhenwei918/p/6870340.html?utm_source=itdadao&utm_medium=referral)
+2. [README教程](https://github.com/guodongxiaren/README)
+3. [Mac使用tree生成目录结构](https://blog.csdn.net/qq673318522/article/details/53713903)
 
 # 下面是 vue init 自带 Readme
 

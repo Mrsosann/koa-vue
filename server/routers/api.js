@@ -13,7 +13,8 @@ const routers = router
     ctx.body = {
       status: 'success',
       data: {
-        name: 'chudazhu'
+        name: 'chudazhu123',
+        email: '243906076@qq.com'
       }
     }
   })
