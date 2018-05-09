@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>koa-vue</h1>
     <router-view/>
   </div>
 </template>
@@ -11,6 +10,6 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import "./style/style";
 </style>
