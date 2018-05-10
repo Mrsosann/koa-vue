@@ -4,6 +4,7 @@ const path = require('path')
 
 // const Router = require('koa-router')
 const Static = require('koa-static')
+const bodyParser = require('koa-bodyparser')
 
 const app = new Koa()
 
@@ -11,6 +12,7 @@ const app = new Koa()
 const routers = require('./server/routers/index')
 // 初始化路由中间件
 app
+  .use(bodyParser())
   .use(routers.routes())
   .use(routers.allowedMethods())
 

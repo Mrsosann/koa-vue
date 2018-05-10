@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index'
 import Index from '@/page/index'
 import Content from '@/page/content'
 import Login from '@/page/login'
@@ -29,6 +30,21 @@ const routes = [
 
 const router = new Router({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta && to.meta.requireAuth) {
+    if (store.state.token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

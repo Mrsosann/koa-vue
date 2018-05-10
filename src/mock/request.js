@@ -8,4 +8,11 @@ if (process.env.NODE_ENV === 'development') {
     date: new Date().toLocaleDateString(),
     email: Random.email()
   })
+  match('login', 'post', 'success', {
+    token: 'mock request token',
+    msg: '登录成功',
+    name: 'chuzhu',
+    date: new Date().toLocaleDateString(),
+    email: Random.email()
+  })
 }

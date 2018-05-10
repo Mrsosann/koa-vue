@@ -18,7 +18,8 @@
                 <el-checkbox v-model="login.remember">下次记住密码</el-checkbox>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('login')">立即登录</el-button>
+                <el-button type="primary" @click="submitLogin">立即登录</el-button>
+                <el-button @click="resetForm('login')">重置</el-button>
               </el-form-item>
               <el-form-item>
                 <p class="login-footer">
@@ -108,14 +109,22 @@
 <script>
 import Header from '../components/header.vue'
 import Footer from '../components/footer.vue'
+import * as types from '../store/types'
 export default {
   components: {
     Header,
     Footer
   },
+  created () {
+    console.log(`This is login created: ${this.$store.state.show}`)
+  },
+  mounted () {
+    this.$store.commit(types.TITLE, 'Login')
+  },
   data () {
     return {
       activeTabName: 'login',
+      token: '',
       login: {
         username: '',
         password: '',
@@ -195,9 +204,41 @@ export default {
       this.$refs[formName].validate((valid) => {
         // valid 是否验证通过 boolean
         if (valid) {
-          console.log('submit: ' + JSON.stringify(valid))
+          console.log('this is common submit form')
         } else {
           console.log('form ' + formName + 'error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    submitLogin () {
+      // 登录表单提交处理函数
+      this.$refs.login.validate((valid) => {
+        // valid 是否验证通过 boolean
+        if (valid) {
+          this.$api.post('login', {
+            username: this.login.username,
+            password: this.login.password
+          }, data => {
+            this.$message({
+              message: data.msg,
+              type: 'success'
+            })
+            this.token = data.token
+            this.$store.commit(types.LOGIN, this.token)
+            let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+            this.$router.push({
+              path: redirect
+            })
+          }, err => {
+            console.log(err)
+            this.$message.error(err.msg)
+          })
+        } else {
+          console.log('error submit login !!')
           return false
         }
       })
@@ -208,8 +249,8 @@ export default {
 
 <style lang="less" scoped>
   @import "../style/base";
-  .el-main {
-  }
+  // .el-main {
+  // }
   .main-card {
     width: 380px;
     margin: 40px auto;
