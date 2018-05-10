@@ -59,7 +59,6 @@ axios.interceptors.response.use(
           })
       }
     }
-    // console.log(JSON.stringify(error));//console : Error: Request failed with status code 402
     return Promise.reject(error.response.data)
   }
 )
@@ -92,7 +91,7 @@ function apiAxios (method, url, params, success, failure) {
     })
     .catch(function (err) {
       // TODO: 增加统一错误处理上报
-      console.error('***** api error, err: *****')
+      console.error('*****FE src api error, err: *****')
       console.log(err)
       // let res = err.response
       // if (err) {

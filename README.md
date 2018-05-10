@@ -170,6 +170,7 @@ nodemon server.js
 productionSourceMap: false,
 ```
 
+## 6 `node db_init.js` 初始化数据库
 # Reference
 1. [vue-cli构建项目使用 less](https://www.cnblogs.com/zhuzhenwei918/p/6870340.html?utm_source=itdadao&utm_medium=referral)
 2. [README教程](https://github.com/guodongxiaren/README)

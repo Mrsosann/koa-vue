@@ -116,7 +116,7 @@ export default {
     Footer
   },
   created () {
-    console.log(`This is login created: ${this.$store.state.show}`)
+    // console.log(`This is login created: ${this.$store.state.show}`)
   },
   mounted () {
     this.$store.commit(types.TITLE, 'Login')
@@ -203,12 +203,12 @@ export default {
       // 页面表单统一提交处理函数
       this.$refs[formName].validate((valid) => {
         // valid 是否验证通过 boolean
-        if (valid) {
-          console.log('this is common submit form')
-        } else {
-          console.log('form ' + formName + 'error submit!!')
-          return false
-        }
+        // if (valid) {
+        //   console.log('this is common submit form')
+        // } else {
+        //   console.log('form ' + formName + 'error submit!!')
+        //   return false
+        // }
       })
     },
     resetForm (formName) {
@@ -234,11 +234,11 @@ export default {
               path: redirect
             })
           }, err => {
-            console.log(err)
+            // console.log(err)
             this.$message.error(err.msg)
           })
         } else {
-          console.log('error submit login !!')
+          console.log('前端表单验证未通过')
           return false
         }
       })
